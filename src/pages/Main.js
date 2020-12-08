@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, View, Text } from 'react-native';
+import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
+import { MaterialIcons } from '@expo/vector-icons';
 
 function Main({ navigation }) {
     const [currentRegion, setCurrentRegion] = useState(null);
@@ -33,23 +34,40 @@ function Main({ navigation }) {
     }
 
     return (
-        <MapView initialRegion={currentRegion} style={styles.map}>
-            <Marker coordinate={{ latitude: -15.8802964, longitude: -48.0178173 }} >
-                <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/23109016?s=460&u=6e85bd07720e642f7ab3cd08e124debc66325d65&v=4' }} />
+        <>
+            <MapView initialRegion={currentRegion} style={styles.map}>
+                <Marker coordinate={{ latitude: -15.8802964, longitude: -48.0178173 }} >
+                    <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/23109016?s=460&u=6e85bd07720e642f7ab3cd08e124debc66325d65&v=4' }} />
 
-                <Callout onPress={() => {
-                    //navegação
-                    navigation.navigate('Profile', { github_username: 'jesiel15'});
-                }}>
-                    <View style={styles.callout}>
-                        <Text style={styles.devName}>Jesiel Faria</Text>
-                        <Text style={styles.devBio}>@Biografia Biografia Biografia Biografia</Text>
-                        <Text style={styles.devTech}>Tecnologias, Tecnologias, Tecnologias</Text>
+                    <Callout onPress={() => {
+                        //navegação
+                        navigation.navigate('Profile', { github_username: 'jesiel15' });
+                    }}>
+                        <View style={styles.callout}>
+                            <Text style={styles.devName}>Jesiel Faria</Text>
+                            <Text style={styles.devBio}>@Biografia Biografia Biografia Biografia</Text>
+                            <Text style={styles.devTech}>Tecnologias, Tecnologias, Tecnologias</Text>
 
-                    </View>
-                </Callout>
-            </Marker>
-        </MapView>
+                        </View>
+                    </Callout>
+                </Marker>
+            </MapView>
+
+            <View style={styles.searchForm}>
+                <TextInput
+                    style={styles.serachInput}
+                    placeholder="Buscar devs por techs.."
+                    placeholderTextColor="#999"
+                    autoCapitalize="words"
+                    autoCorrect={false}
+
+                />
+
+                <TouchableOpacity onPress={() => []} style={styles.loadButton}>
+                    <MaterialIcons name="my-location" size={20} color="#FFF" />
+                </TouchableOpacity>
+            </View>
+        </>
     );
 }
 
@@ -64,10 +82,10 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         borderColor: '#FFF'
     },
-    callout:{
+    callout: {
         width: 260,
     },
-    devName:{
+    devName: {
         fontWeight: 'bold',
         fontSize: 16,
     },
@@ -75,8 +93,42 @@ const styles = StyleSheet.create({
         color: '#665',
         marginTop: 5,
     },
-    devTech:{
+    devTech: {
         marginTop: 5,
+    },
+    searchForm: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        right: 20,
+        zIndex: 5,
+        flexDirection: 'row',
+    },
+    serachInput: {
+        flex: 1,
+        height: 50,
+        backgroundColor: '#FFF',
+        color: '#333',
+        borderRadius: 25,
+        paddingHorizontal: 20,
+        fontSize: 16,
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowOffset: {
+            width: 4,
+            height: 4,
+        },
+        elevation: 3
+    },
+    loadButton: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#8E4DFF',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 15,
     }
+
 })
 export default Main;
